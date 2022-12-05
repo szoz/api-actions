@@ -8,6 +8,4 @@ RUN pipenv sync
 
 COPY main.py .
 
-EXPOSE 5000
-
 CMD ["pipenv", "run", "python", "main.py"]
