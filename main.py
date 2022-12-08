@@ -25,7 +25,7 @@ async def root() -> dict:
     return {'status': 'OK'}
 
 
-@app.get('/products', response_model=schemas.Product)
+@app.get('/products', response_model=list[schemas.Product])
 async def get_products(db: Session = Depends(get_db_session)):
     """Return list of products."""
     return db.query(models.Product).all()
