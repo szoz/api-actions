@@ -1,0 +1,30 @@
+version: '3.6'
+
+services:
+  api:
+    build: .
+    depends_on:
+      - postgresql
+    environment:
+      SQLALCHEMY_DATABASE_URL: postgresql+psycopg2://myusername:mypassword@postgresql:5432/postgres
+    networks:
+      - custom_network
+    ports:
+      - "5000:5000"
+    restart: always
+
+  postgresql:
+    environment:
+      POSTGRES_USER: myusername
+      POSTGRES_PASSWORD: mypassword
+    image: postgres
+    networks:
+      - custom_network
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - ./db:/var/lib/postgresql/data
+networks:
+  custom_network:
+    name: custom_network
