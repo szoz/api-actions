@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 import models
 import schemas
 from database import get_db_session
-from auth import login_required
+from auth import login_required, generate_token_payload_response, token_required
 
 app = FastAPI()
 
@@ -18,13 +18,20 @@ async def root() -> dict:
     return {'status': 'OK'}
 
 
-@app.get('/login', dependencies=[Depends(login_required)])
-async def login():
+@app.post('/login',
+          dependencies=[Depends(login_required)],
+          response_model=schemas.TokenData,
+          responses={401: {'model': schemas.ErrorMessage}})
+async def login(token_data: str = Depends(generate_token_payload_response)):
     """Log into the API using basic auth."""
-    return {'auth': 'OK'}
+    return token_data
 
 
-@app.get('/products', response_model=list[schemas.Product])
+@app.get('/products',
+         dependencies=[Depends(token_required)],
+         response_model=list[schemas.Product],
+         responses={401: {'model': schemas.ErrorMessage},
+                    403: {'model': schemas.ErrorMessage}})
 async def get_products(db: Session = Depends(get_db_session)):
     """Return list of products."""
     return db.query(models.Product).all()
