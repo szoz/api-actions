@@ -31,5 +31,7 @@ jobs:
       - name: Test with pytest
         env:
           SQLALCHEMY_DATABASE_URL: ${{ secrets.SQLALCHEMY_DATABASE_URL }}
+          USER_NAME: ${{ secrets.USER_NAME }}
+          USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
         run: |
           pipenv run pytest
