@@ -8,6 +8,7 @@ from fastapi.testclient import TestClient
 from jwt import decode
 
 from main import app
+from auth import JWT_SECRET
 
 
 @fixture
@@ -25,7 +26,7 @@ def user_credentials() -> tuple[str, str]:
 @fixture
 def token_params() -> dict:
     """Return secret key used to create token."""
-    return {'JWT_SECRET': environ['JWT_SECRET'],
+    return {'JWT_SECRET': JWT_SECRET,
             'JWT_ALGORITHM': 'HS256',
             'JWT_EXPIRE': 15 * 60}
 
