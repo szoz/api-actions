@@ -1,28 +1,27 @@
 from fastapi import FastAPI, Depends
+
 from uvicorn import run
 
 from sqlalchemy.orm import Session
 
 import models
 import schemas
-import database
+from database import get_db_session
+from auth import login_required
 
 app = FastAPI()
-
-
-def get_db_session():
-    """Create and yield DB session object."""
-    db_session = database.SessionLocal()
-    try:
-        yield db_session
-    finally:
-        db_session.close()
 
 
 @app.get('/')
 async def root() -> dict:
     """Only endpoint with simple JSON response."""
     return {'status': 'OK'}
+
+
+@app.get('/login', dependencies=[Depends(login_required)])
+async def login():
+    """Log into the API using basic auth."""
+    return {'auth': 'OK'}
 
 
 @app.get('/products', response_model=list[schemas.Product])
