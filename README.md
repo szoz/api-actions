@@ -1,6 +1,6 @@
 # api-actions
 
-A simple API for testing GitHub actions. 
+A simple API for testing GitHub actions.
 
 ## Setup
 

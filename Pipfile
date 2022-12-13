@@ -13,6 +13,8 @@ pyjwt = "*"
 [dev-packages]
 pytest = "*"
 flake8 = "*"
+black = "*"
+pre-commit = "*"
 
 [requires]
 python_version = "3.10"
