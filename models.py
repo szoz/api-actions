@@ -5,7 +5,8 @@ from database import Base
 
 class Product(Base):
     """Product ORM model."""
-    __tablename__ = 'products'
+
+    __tablename__ = "products"
 
     id = Column(Integer, primary_key=True)
     name = Column(String(100))
@@ -14,7 +15,8 @@ class Product(Base):
 
 class User(Base):
     """User ORM model."""
-    __tablename__ = 'users'
+
+    __tablename__ = "users"
 
     id = Column(Integer, primary_key=True)
     name = Column(String(100))
