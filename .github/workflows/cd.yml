@@ -40,3 +40,11 @@ jobs:
         docker build -t $ECR_URL:$IMAGE_TAG .
         docker push $ECR_URL:$IMAGE_TAG
         echo "image=$ECR_URL:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+    - name: Force service redeploy
+      run: |
+        aws ecs update-service --force-new-deployment --cluster aa-cluster --service aa-service
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
